@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #3498db;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            color: #2c3e50;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #3498db;
+            margin: 10px auto 0;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+        }
+        
+        .nav-links a.active {
+            color: #3498db;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 介绍部分 */
+        #intro {
+            background-color: white;
+            padding-top: 120px;
+            text-align: center;
+        }
+        
+        .intro-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 30px;
+            border: 5px solid #f1f1f1;
+        }
+        
+        .intro-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .intro-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        
+        /* 博客部分 */
+        #blog {
+            background-color: #f9f9f9;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .blog-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .blog-content {
+            padding: 25px;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .blog-excerpt {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        /* 联系方式部分 */
+        #contact {
+            background-color: white;
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f1f8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+        
+        .contact-text h3 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .contact-text p {
+            color: #7f8c8d;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #f1f8ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3498db;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .intro-title {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .intro-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">个人博客</div>
+            <ul class="nav-links">
+                <li><a href="#intro" class="active">网站介绍</a></li>
+                <li><a href="#blog">博客</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 介绍部分 -->
+    <section id="intro">
+        <div class="container">
+            <div class="intro-content">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="个人头像" class="avatar">
+                <h1 class="intro-title">maple>mapl
+                <p class="intro-subtitle">ai算法|神经生物学>ai>
+                <p class="intro-text">白马非马，而离坚白。白马名马，而白非白。>zh>
+            </div>
+        </div>
+    </section>
+
+    <!-- 博客部分 -->
+    <section id="blog">
+        <div class="container">
+            <h2 class="section-title">主要博客</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="博客图片" class="blog-image">
+                    <div class="blog-content">
+                        <h3 class="blog-title">客观事物的映射与分辨差</h3>
+                        <div class="blog-meta">
+                            <span>2025年12月24日</span>
+                            <span>理论</span>
+                        </div>
+                        <p class="blog-excerpt">闭包是JavaScript中一个重要且强大的概念。本文将深入探讨闭包的工作原理、使用场景以及常见陷阱。</p>
+                        <a href="客观事物的映射与分辨差.html" class="read-more">阅读更多 →</a>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="博客图片" class="blog-image">
+                    <div class="blog-content">
+                        <h3 class="blog-title">类型</h3>
+                        <div class="blog-meta">
+                            <span>2023年9月28日</span>
+                            <span>Type</span>
+                        </div>
+                        <p class="blog-excerpt">高级类型、条件类型和类型推断等进阶内容</p>
+                        <a href="#" class="read-more">阅读更多 →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式部分 -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">联系方式</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>电子邮件</h3>deepspace_maple@outlook.com<p>pp
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>电话</h3>
+                            <p>+86 13166356817</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>地址</h3>
+                            <p>中国</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p> </p>
+            <p class="copyright">© 2025 maple的个人博客. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // 导航链接点击效果
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 移除所有active类
+                navLinks.forEach(item => item.classList.remove('active'));
+                // 为当前点击的链接添加active类
+                this.classList.add('active');
+                
+                // 如果是移动端，点击后关闭菜单
+                if(window.innerWidth <= 768) {
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+                
+                // 平滑滚动到对应部分
+                const targetId = this.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        
+        // 滚动时高亮当前部分
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navHeight = 80;
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(pageYOffset >= (sectionTop - navHeight)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // 页面加载完成后添加淡入效果
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
