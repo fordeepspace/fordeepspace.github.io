@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客观事物的映射与分辨差 | 个人博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 导航 */
+        .nav {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #7f8c8d;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        /* 文章内容 */
+        .article-header {
+            margin-bottom: 30px;
+        }
+        
+        .article-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .article-content h2 {
+            margin: 30px 0 15px;
+            color: #2c3e50;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content code {
+            background-color: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .article-content pre {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .article-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background-color: #f1f8ff;
+            color: #3498db;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 1.8rem;
+            }
+            
+            .article-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="../index.html#blog" class="back-link">
+            <i class="fas fa-arrow-left"></i> 返回博客列表
+        </a>
+    </nav>
+    
+    <article>
+        <header class="article-header">
+            <h1 class="article-title">客观事物的映射与分辨差</h1>
+            <div class="article-meta">
+                <span>作者：maple</span>
+                <span>发布日期：2025年12月24日</span>
+                <span>类型：概念</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="JavaScript闭包" class="article-image">
+        </header>
+        
+        <div class="article-content">
+            <p>闭包是JavaScript中一个重要且强大的概念。对于许多开发者来说，理解闭包是掌握JavaScript的关键一步。本文将深入探讨闭包的工作原理、使用场景以及常见陷阱。</p>
+            
+            <h2>什么是闭包？</h2>
+            <p>闭包是指那些能够访问自由变量的函数。自由变量是指在函数中使用的，但既不是函数参数也不是函数局部变量的变量。</p>
+            
+            <p>简单来说，闭包就是函数和其周围状态（词法环境）的引用捆绑在一起形成的一个组合。这个组合让函数可以访问其词法作用域外的变量。</p>
+            
+            <h2>闭包的工作原理</h2>
+            <p>在JavaScript中，每当创建一个函数，闭包就会在函数创建的同时被创建出来。下面是一个简单的例子：</p>
+            
+            <pre><code>function outerFunction() {
+    let outerVariable = '我在外部函数中';
+    
+    function innerFunction() {
+        console.log(outerVariable); // 可以访问外部函数的变量
+    }
+    
+    return innerFunction;
+}
+
+const myClosure = outerFunction();
+myClosure(); // 输出: "我在外部函数中"</code></pre>
+            
+            <p>在这个例子中，<code>innerFunction</code>形成了一个闭包，它可以访问<code>outerFunction</code>的变量，即使<code>outerFunction</code>已经执行完毕。</p>
+            
+            <h2>闭包的使用场景</h2>
+            <p>闭包在JavaScript中有多种实用场景：</p>
+            
+            <h3>1. 数据封装和私有变量</h3>
+            <p>在ES6类出现之前，闭包是实现私有变量的主要方式：</p>
+            
+            <pre><code>function createCounter() {
+    let count = 0; // 私有变量
+    
+    return {
+        increment: function() {
+            count++;
+            return count;
+        },
+        decrement: function() {
+            count--;
+            return count;
+        },
+        getCount: function() {
+            return count;
+        }
+    };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.getCount()); // 2</code></pre>
+            
+            <h3>2. 函数工厂</h3>
+            <p>闭包可以用于创建具有特定配置的函数：</p>
+            
+            <pre><code>function createMultiplier(multiplier) {
+    return function(x) {
+        return x * multiplier;
+    };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5)); // 10
+console.log(triple(5)); // 15</code></pre>
+            
+            <h3>3. 事件处理中的状态保持</h3>
+            <p>在事件处理程序中，闭包可以帮助我们保持状态：</p>
+            
+            <pre><code>function setupButtons() {
+    for (var i = 0; i < 3; i++) {
+        (function(index) {
+            document.getElementById(`btn-${index}`).addEventListener('click', function() {
+                console.log(`按钮 ${index} 被点击了`);
+            });
+        })(i);
+    }
+}</code></pre>
+            
+            <h2>闭包的常见陷阱</h2>
+            
+            <h3>1. 内存泄漏</h3>
+            <p>由于闭包会保持对其外部变量的引用，如果不小心，可能会导致内存泄漏：</p>
+            
+            <pre><code>function createHeavyObject() {
+    const largeObject = new Array(1000000).fill('data');
+    
+    return function() {
+        console.log(largeObject[0]); // 即使不再需要，largeObject也不会被垃圾回收
+    };
+}</code></pre>
+            
+            <h3>2. 循环中的闭包</h3>
+            <p>这是JavaScript面试中常见的问题：</p>
+            
+            <pre><code>// 问题代码
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // 全部输出 3，而不是 0, 1, 2
+    }, 1000);
+}
+
+// 解决方案1：使用IIFE（立即执行函数表达式）
+for (var i = 0; i < 3; i++) {
+    (function(index) {
+        setTimeout(function() {
+            console.log(index); // 正确输出 0, 1, 2
+        }, 1000);
+    })(i);
+}
+
+// 解决方案2：使用let声明变量（ES6）
+for (let i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // 正确输出 0, 1, 2
+    }, 1000);
+}</code></pre>
+            
+            <h2>性能考虑</h2>
+            <p>虽然闭包非常有用，但过度使用可能会影响性能。每个闭包都会占用内存，因为JavaScript引擎需要保持闭包引用的外部变量不被垃圾回收。在性能敏感的应用中，应当谨慎使用闭包。</p>
+            
+            <h2>总结</h2>
+            <p>闭包是JavaScript中一个强大且不可或缺的特性。理解闭包的工作原理和使用场景，可以帮助我们编写更优雅、更模块化的代码。同时，了解闭包的陷阱和性能影响，可以避免常见错误并编写更高效的应用程序。</p>
+            
+            <p>掌握闭包是成为高级JavaScript开发者的重要一步。希望本文能帮助你更好地理解和使用JavaScript闭包。</p>
+        </div>
+        
+        <footer class="article-footer">
+            <div class="tags">
+                <span class="tag">JavaScript</span>
+                <span class="tag">闭包</span>
+                <span class="tag">前端开发</span>
+                <span class="tag">编程概念</span>
+            </div>
+            <p>感谢阅读！如果您有任何问题或建议，欢迎通过网站的联系方式与我交流。</p>
+            <p><a href="../index.html#blog">← 返回博客列表</a></p>
+        </footer>
+    </article>
+    
+    <script>
+        // 简单的代码高亮
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                // 在实际应用中，这里可以使用Prism.js或Highlight.js进行代码高亮
+                block.style.display = 'block';
+                block.style.whiteSpace = 'pre-wrap';
+            });
+        });
+    </script>
+</body>
+</html>
